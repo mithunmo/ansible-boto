@@ -25,7 +25,21 @@
             "SubnetId" : "subnet-46d3036d",
             "AvailabilityZone" : {"Ref" : "RegionName"},
             "SecurityGroupIds" : ["sg-974596f3"],
-            "KeyName" : "Mofilm-Stage"
+            "KeyName" : "Mofilm-Stage",
+            "UserData": {
+                "Fn::Base64": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "#!/bin/bash\n",
+                            "yum update -y\n",
+                            "yum install -y httpd24 php56 mysql55-server php56-mysqlnd\n",
+                            "service httpd start\n",
+                            "chkconfig httpd on\n"
+                        ]
+                    ]
+                }
+            }
         }
     },
     "MyS3" : {
