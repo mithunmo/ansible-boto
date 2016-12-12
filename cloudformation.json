@@ -1,0 +1,29 @@
+{
+"Description" : "This is LAMP stack",
+"Parameters" : {
+        "RegionName": {
+          "Type": "String",
+          "Default": "us-east-1a"
+        }
+},
+"Resources" : {
+    "MyEc2Instance" : {
+        "Type" : "AWS::EC2::Instance",
+        "Properties" : {
+            "ImageId" : "ami-a4827dc9",
+            "InstanceType" : "t2.micro",
+            "SubnetId" : "subnet-46d3036d",
+            "AvailabilityZone" : {"Ref" : "RegionName"},
+            "SecurityGroupIds" : ["sg-974596f3"],
+            "KeyName" : "Mofilm-Stage"
+        }
+    },
+    "MyS3" : {
+        "Type" : "AWS::S3::Bucket",
+        "Properties" : {
+            "BucketName" : "mys3-mithun-mofilm"
+        }
+    }
+
+}  
+}
