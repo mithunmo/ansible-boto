@@ -1,17 +1,27 @@
 {
 "Description" : "This is LAMP stack",
+"Mappings" : {
+    "RegionMap" : {
+        "us-west-1" : { "64" : "ami-23e8a343" },
+        "us-east-1" : { "64" : "ami-b73b63a0" }
+    }
+},
 "Parameters" : {
-        "RegionName": {
+        "InstanceType": {
           "Type": "String",
-          "Default": "us-east-1a"
+          "Default": "t2.micro"
+        },
+        "RegionName" : {
+            "Type" : "String",
+            "Default" : "us-east-1a"
         }
 },
 "Resources" : {
     "MyEc2Instance" : {
         "Type" : "AWS::EC2::Instance",
         "Properties" : {
-            "ImageId" : "ami-a4827dc9",
-            "InstanceType" : "t2.micro",
+            "ImageId" : { "Fn::FindInMap" : [ "RegionMap", "us-east-1", "64" ] },
+            "InstanceType" : {"Ref" : "InstanceType"},
             "SubnetId" : "subnet-46d3036d",
             "AvailabilityZone" : {"Ref" : "RegionName"},
             "SecurityGroupIds" : ["sg-974596f3"],
@@ -21,7 +31,7 @@
     "MyS3" : {
         "Type" : "AWS::S3::Bucket",
         "Properties" : {
-            "BucketName" : "mys3-mithun-mofilm"
+            "BucketName" : "mys3-mithun"
         }
     }
 
